@@ -16,6 +16,7 @@
  */
 package com.aerospike.client;
 
+import com.aerospike.client.listener.WriteListenerWithMetadata;
 import java.io.Closeable;
 import java.io.File;
 import java.util.ArrayList;
@@ -383,7 +384,7 @@ public class AerospikeClient implements IAerospikeClient, Closeable {
 	 * @param bins					array of bin name/value pairs
 	 * @throws AerospikeException	if event loop registration fails
 	 */
-	public final void put(EventLoop eventLoop, WriteListener listener, WritePolicy policy, Key key, Bin... bins) throws AerospikeException {
+	public final void put(EventLoop eventLoop, WriteListenerWithMetadata listener, WritePolicy policy, Key key, Bin... bins) throws AerospikeException {
 		if (policy == null) {
 			policy = writePolicyDefault;
 		}
@@ -430,7 +431,7 @@ public class AerospikeClient implements IAerospikeClient, Closeable {
 	 * @param bins					array of bin name/value pairs
 	 * @throws AerospikeException	if event loop registration fails
 	 */
-	public final void append(EventLoop eventLoop, WriteListener listener, WritePolicy policy, Key key, Bin... bins) throws AerospikeException {
+	public final void append(EventLoop eventLoop, WriteListenerWithMetadata listener, WritePolicy policy, Key key, Bin... bins) throws AerospikeException {
 		if (policy == null) {
 			policy = writePolicyDefault;
 		}
@@ -473,7 +474,7 @@ public class AerospikeClient implements IAerospikeClient, Closeable {
 	 * @param bins					array of bin name/value pairs
 	 * @throws AerospikeException	if event loop registration fails
 	 */
-	public final void prepend(EventLoop eventLoop, WriteListener listener, WritePolicy policy, Key key, Bin... bins) throws AerospikeException {
+	public final void prepend(EventLoop eventLoop, WriteListenerWithMetadata listener, WritePolicy policy, Key key, Bin... bins) throws AerospikeException {
 		if (policy == null) {
 			policy = writePolicyDefault;
 		}
@@ -520,7 +521,7 @@ public class AerospikeClient implements IAerospikeClient, Closeable {
 	 * @param bins					array of bin name/value pairs
 	 * @throws AerospikeException	if event loop registration fails
 	 */
-	public final void add(EventLoop eventLoop, WriteListener listener, WritePolicy policy, Key key, Bin... bins) throws AerospikeException {
+	public final void add(EventLoop eventLoop, WriteListenerWithMetadata listener, WritePolicy policy, Key key, Bin... bins) throws AerospikeException {
 		if (policy == null) {
 			policy = writePolicyDefault;
 		}
