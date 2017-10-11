@@ -36,7 +36,7 @@ public final class AsyncWrite extends AsyncCommand implements AsyncSingleCommand
 	private int expiration;
 
 	public AsyncWrite(WriteListener listener, WritePolicy writePolicy, Key key, Bin[] bins, Operation.Type operation) {
-		super(writePolicy, new Partition(key), null, false, false);
+		super(writePolicy, new Partition(key), null, false, true);
 		this.listener = listener;
 		this.writePolicy = writePolicy;
 		this.key = key;
