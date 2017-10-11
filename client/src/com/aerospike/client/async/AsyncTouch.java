@@ -18,7 +18,9 @@ package com.aerospike.client.async;
 
 import com.aerospike.client.AerospikeException;
 import com.aerospike.client.Key;
+import com.aerospike.client.Metadata;
 import com.aerospike.client.cluster.Partition;
+import com.aerospike.client.command.Buffer;
 import com.aerospike.client.listener.WriteListener;
 import com.aerospike.client.policy.WritePolicy;
 
@@ -26,7 +28,9 @@ public final class AsyncTouch extends AsyncCommand implements AsyncSingleCommand
 	private final WriteListener listener;
 	private final WritePolicy writePolicy;
 	private final Key key;
-		
+	private int generation;
+	private int expiration;
+
 	public AsyncTouch(WriteListener listener, WritePolicy writePolicy, Key key) {
 		super(writePolicy, new Partition(key), null, false, false);
 		this.listener = listener;
@@ -41,6 +45,8 @@ public final class AsyncTouch extends AsyncCommand implements AsyncSingleCommand
 
 	@Override
 	public void parseResult() {
+		generation = Buffer.bytesToInt(dataBuffer, 6);
+		expiration = Buffer.bytesToInt(dataBuffer, 10);
 		if (resultCode != 0) {
 			throw new AerospikeException(resultCode);
 		}
@@ -49,7 +55,7 @@ public final class AsyncTouch extends AsyncCommand implements AsyncSingleCommand
 	@Override
 	protected void onSuccess() {
 		if (listener != null) {
-			listener.onSuccess(key);
+			listener.onSuccess(key, new Metadata(generation, expiration));
 		}
 	}	
 

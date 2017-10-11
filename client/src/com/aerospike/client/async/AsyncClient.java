@@ -16,6 +16,7 @@
  */
 package com.aerospike.client.async;
 
+import com.aerospike.client.Metadata;
 import java.io.Closeable;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -1052,11 +1053,11 @@ public class AsyncClient extends AerospikeClient implements IAsyncClient, Closea
 		}
 		
 		@Override
-		public void onSuccess(final Key key) {
+		public void onSuccess(final Key key, final Metadata metadata) {
 			commandComplete(1, new Runnable() {				
 				public void run() {
 					if (listener != null) {
-						listener.onSuccess(key);
+						listener.onSuccess(key, metadata);
 					}
 				}
 			});

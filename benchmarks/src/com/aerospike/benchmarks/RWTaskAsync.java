@@ -20,6 +20,7 @@ import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.AerospikeException;
 import com.aerospike.client.Bin;
 import com.aerospike.client.Key;
+import com.aerospike.client.Metadata;
 import com.aerospike.client.Record;
 import com.aerospike.client.Value;
 import com.aerospike.client.async.EventLoop;
@@ -123,7 +124,7 @@ public final class RWTaskAsync extends RWTask {
 
 	private final class WriteHandler implements WriteListener {	
 		@Override
-		public void onSuccess(Key key) {
+		public void onSuccess(Key key, Metadata metadata) {
 			counters.write.count.getAndIncrement();
 			runNextCommand();
 		}
@@ -137,7 +138,7 @@ public final class RWTaskAsync extends RWTask {
 
 	private final class LatencyWriteHandler implements WriteListener {
 		@Override
-		public void onSuccess(Key key) {
+		public void onSuccess(Key key, Metadata metadata) {
 			long elapsed = System.nanoTime() - begin;
 			counters.write.latency.add(elapsed);
 			counters.write.count.getAndIncrement();

@@ -14,28 +14,34 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.aerospike.client.listener;
-
-import com.aerospike.client.AerospikeException;
-import com.aerospike.client.Key;
-import com.aerospike.client.Metadata;
+package com.aerospike.client;
 
 /**
- * Asynchronous result notifications for put, append, prepend, add, delete and touch commands.
+ * Container object for record metadata.
  */
-public interface WriteListener {
+public final class Metadata {
 	/**
-	 * This method is called when an asynchronous write command completes successfully.
+	 * Namespace. Equivalent to database name.
+	 */
+	public final int generation;
+
+	/**
+	 * Optional set name. Equivalent to database table.
+	 */
+	public final int expiration;
+
+
+
+	/**
+	 * Initialize metadata from generation and expiration values.
 	 *
-	 * @param key          unique record identifier
-	 * @param metadata
+	 * @param generation				generation
+	 * @param expiration				expiration.
 	 */
-	public void onSuccess(Key key, Metadata metadata);
-	
-	/**
-	 * This method is called when an asynchronous write command fails.
-	 * 
-	 * @param exception				error that occurred
-	 */
-	public void onFailure(AerospikeException exception);
+	public Metadata(int generation, int expiration)  {
+		this.generation = generation;
+		this.expiration = expiration;
+	}
+
+
 }

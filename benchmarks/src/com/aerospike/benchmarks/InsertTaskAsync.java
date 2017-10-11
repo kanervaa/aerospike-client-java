@@ -20,6 +20,7 @@ import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.AerospikeException;
 import com.aerospike.client.Bin;
 import com.aerospike.client.Key;
+import com.aerospike.client.Metadata;
 import com.aerospike.client.async.EventLoop;
 import com.aerospike.client.listener.WriteListener;
 import com.aerospike.client.util.RandomShift;
@@ -73,7 +74,7 @@ public final class InsertTaskAsync extends InsertTask {
 	
 	private final class LatencyWriteHandler implements WriteListener {
 		@Override
-		public void onSuccess(Key key) {
+		public void onSuccess(Key key, Metadata metadata) {
 			long elapsed = System.nanoTime() - begin;
 			counters.write.latency.add(elapsed);
 			counters.write.count.getAndIncrement();	
@@ -95,7 +96,7 @@ public final class InsertTaskAsync extends InsertTask {
 
 	private final class WriteHandler implements WriteListener {		
 		@Override
-		public void onSuccess(Key key) {
+		public void onSuccess(Key key, Metadata metadata) {
 			counters.write.count.getAndIncrement();	
 			keyCount++;
 					

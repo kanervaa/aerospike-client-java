@@ -16,6 +16,7 @@
  */
 package com.aerospike.examples;
 
+import com.aerospike.client.Metadata;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -93,7 +94,7 @@ public class AsyncBatch extends AsyncExample {
 			this.max = max;
 		}
 		
-		public void onSuccess(Key key) {
+		public void onSuccess(Key key, Metadata metadata) {
 			int rows = count.incrementAndGet();
 			
 			if (rows == max) {

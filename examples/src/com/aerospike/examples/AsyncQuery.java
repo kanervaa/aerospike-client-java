@@ -16,6 +16,7 @@
  */
 package com.aerospike.examples;
 
+import com.aerospike.client.Metadata;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.aerospike.client.AerospikeClient;
@@ -88,7 +89,7 @@ public class AsyncQuery extends AsyncExample {
 			Bin bin = new Bin(binName, i);
 			
 			client.put(eventLoop, new WriteListener() {				
-				public void onSuccess(final Key key) {
+				public void onSuccess(final Key key, Metadata metadata) {
 					if (count.incrementAndGet() == size) {
 						runQuery(client, eventLoop, binName);
 					}

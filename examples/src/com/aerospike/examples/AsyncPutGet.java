@@ -16,6 +16,7 @@
  */
 package com.aerospike.examples;
 
+import com.aerospike.client.Metadata;
 import java.io.IOException;
 import java.net.ConnectException;
 
@@ -47,7 +48,7 @@ public class AsyncPutGet extends AsyncExample {
 		console.info("Put inline: namespace=%s set=%s key=%s value=%s", key.namespace, key.setName, key.userKey, bin.value);
 		
 		client.put(eventLoop, new WriteListener() {
-			public void onSuccess(final Key key) {
+			public void onSuccess(final Key key, Metadata metadata) {
 				try {
 					// Write succeeded.  Now call read.
 					console.info("Get inline: namespace=%s set=%s key=%s", key.namespace, key.setName, key.userKey);
@@ -94,7 +95,7 @@ public class AsyncPutGet extends AsyncExample {
 		}
 		
 		// Write success callback.
-		public void onSuccess(Key key) {
+		public void onSuccess(Key key, Metadata metadata) {
 			try {
 				// Write succeeded.  Now call read.
 				console.info("Get with retry: namespace=%s set=%s key=%s", key.namespace, key.setName, key.userKey);
